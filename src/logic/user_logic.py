@@ -62,6 +62,23 @@ class UserLogic:
             print(f"Error deleting user: {err}")
             return False
 
+    def add_like(self, user_id, vacation_id):
+        try:
+            query = """
+            INSERT INTO likes 
+            (users_id , vacations_id)
+            VALUES 
+            (%s, %s)
+            """
+            params = (user_id, vacation_id)
+            self.dal.insert(query, params)
+            print("Added like")
+            return True
+
+        except Exception as err:
+            print(f"Error adding like: {err}")
+            return False
+
 
 if __name__ == "__main__":
     try:

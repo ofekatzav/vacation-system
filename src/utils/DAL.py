@@ -14,19 +14,10 @@ class DAL:
         """
         try:
             self.connection = mysql.connector.connect(
-                host="localhost",  # שרת מקומי על המחשב שלך
-                # אפשרויות נוספות: IP או דומיין של שרת מרוחק
-                # למשל: "123.45.67.89" או "db.example.com"
-
-                user="root",  #  MySQL הוא המשתמש בעל ההרשאות הגבוהות ביותר במערכת :
-
-                password="ofek010170",  # סיסמת ההתחברות
-                # בסביבת ייצור מומלץ לשמור בקובץ הגדרות נפרד או משתנה סביבה
-
-                database="mydb",  # שם מסד הנתונים
-                # יש ליצור את מסד הנתונים מראש עם:
-                # CREATE DATABASE project2;
-
+                host="localhost",
+                user="root",
+                password="harel1115",
+                database="vacation_system",
                 autocommit=True  # כל פעולה תתבצע מיד על בסיס הנתונים
             )
 
@@ -135,9 +126,9 @@ if __name__ == '__main__':
         users = dal.get_table("SELECT * FROM users")
 
         for country in countries:
-            print(f"country name: {country["country_name"]}")
+            print(f"country name: {country['country_name']}")
         for user in users:
-            print(f"first name:{user['first_name']}, last name:{user["last_name"]}")
+            print(f"first name:{user['first_name']}, last name:{user['last_name']}")
 
         # # דוגמאות ל-get_scalar
         # print("\n=== get_scalar examples ===")

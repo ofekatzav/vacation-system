@@ -23,7 +23,6 @@ class UserFacade:
         self.get_password()
         self.get_b_o_d()
 
-
         return self.logic.add_user(*self.params)
 
     def get_first_name(self):
@@ -85,20 +84,20 @@ class UserFacade:
 
 
 
-
-    def get_countries_name(self):
-        while True:
-            countries_name = input("Enter country name: ").lower()
-            if self.country_logic.check_if_country_exist(countries_name):
-                print("Country added to vacation info!")
-                self.params.append(countries_name)
-                break
-            else:
-                print(
-                    "Country does not exist in database, here is a list of all countries:")
-                countries = self.country_logic.get_all_countries()
-                print(" | ".join(country["country_name"]
-                      for country in countries))
+    #
+    # def get_countries_name(self):
+    #     while True:
+    #         countries_name = input("Enter country name: ").lower()
+    #         if self.country_logic.check_if_country_exist(countries_name):
+    #             print("Country added to vacation info!")
+    #             self.params.append(countries_name)
+    #             break
+    #         else:
+    #             print(
+    #                 "Country does not exist in database, here is a list of all countries:")
+    #             countries = self.country_logic.get_all_countries()
+    #             print(" | ".join(country["country_name"]
+    #                   for country in countries))
 
 
 
