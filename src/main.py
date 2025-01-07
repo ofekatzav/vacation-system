@@ -1,1 +1,4 @@
-print("hello word")
+print("ofek")
+print("idan")
+print("ziv")
+print("avi")
