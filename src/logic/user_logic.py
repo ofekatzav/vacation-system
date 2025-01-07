@@ -18,16 +18,16 @@ class UserLogic:
         result = self.dal.get_table(query)
         return result if result is not None else []
 
-    def add_user(self, first_name, last_name, email, password, d_o_b, roles_id =1):
+    def add_user(self, username, first_name, last_name, email, password, d_o_b, roles_id =1):
         try:
             query = """
             INSERT INTO users
-             (first_name, last_name, email, password, d_o_b, roles_id) 
+             (first_name, last_name, email, password, d_o_b, roles_id, username) 
             VALUES 
-            (%s, %s, %s, %s, %s, %s )
+            (%s, %s, %s, %s, %s, %s, %s )
             """
             params = (first_name, last_name, email,
-                    password, d_o_b, roles_id)
+                    password, d_o_b, roles_id, username)
             self.dal.insert(query, params)
             print("Added user successfully")
             return True

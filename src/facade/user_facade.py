@@ -17,6 +17,7 @@ class UserFacade:
 
 
     def add_user(self):
+        self.get_username()
         self.get_first_name()
         self.get_last_name()
         self.get_email()
@@ -24,6 +25,17 @@ class UserFacade:
         self.get_b_o_d()
 
         return self.logic.add_user(*self.params)
+
+    def get_username(self):
+        while True:
+            username = input("Enter username : ").strip()
+            if len(username) < 4:
+                print("Username must be at least 4 characters long.")
+
+            else:
+                self.params.append(username)
+                print("Username added")
+                break
 
     def get_first_name(self):
         while True:
@@ -59,6 +71,9 @@ class UserFacade:
                 break
             else:
                 print("email is not valid")
+
+
+
 
     def get_password(self):
         while True:
