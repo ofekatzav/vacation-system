@@ -52,7 +52,7 @@ class UserLogic:
             print(f"Error updating user: {e}")
             return False
 
-    def del_vacation(self, id):
+    def del_user(self, id):
         query = "DELETE FROM users WHERE id = %s"
         params = (id,)
         try:
