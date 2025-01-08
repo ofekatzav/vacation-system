@@ -61,7 +61,31 @@ class UserLogic:
         except Exception as err:
             print(f"Error deleting user: {err}")
             return False
+    def get_user(self, first_name, last_name, password):
+        query = "SELECT * from users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
+        try:
+            result = self.dal.get_table(query, params)
+            return result if result is not None else None
+        except Exception as err:
+            print(f"Error getting user: {err}")
 
+    def user_exists(self, first_name, last_name, password):
+
+        query = "SELECT COUNT(*) as count FROM users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
+        try:
+            result = self.dal.get_scalar(query, params)
+            return result['count'] > 0 if result else False
+        except Exception as err:
+            print(f"Error checking if user exists: {err}")
+            return False
+    def add_like(self, first_name, last_name , password, vacation_title):
+        query = "INSERT INTO likes VALUES ((SELECT id FROM mydb.users WHERE first_name LIKE %s) , (SELECT id FROM mydb.vacations WHERE title LIKE %s))"
+        params = (first_name, last_name, password ,vacation_title)
+        self.dal.insert(query, params)
+        print("Added like successfully")
+        return True
 
 if __name__ == "__main__":
     try:
