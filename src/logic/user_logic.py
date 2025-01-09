@@ -18,16 +18,16 @@ class UserLogic:
         result = self.dal.get_table(query)
         return result if result is not None else []
 
-    def add_user(self, username, first_name, last_name, email, password, d_o_b, roles_id =1):
+    def add_user(self, first_name, last_name, email, password, d_o_b, roles_id =1):
         try:
             query = """
             INSERT INTO users
-             (first_name, last_name, email, password, d_o_b, roles_id, username) 
+             (first_name, last_name, email, password, d_o_b, roles_id) 
             VALUES 
-            (%s, %s, %s, %s, %s, %s, %s )
+            (%s, %s, %s, %s, %s, %s )
             """
             params = (first_name, last_name, email,
-                    password, d_o_b, roles_id, username)
+                    password, d_o_b, roles_id)
             self.dal.insert(query, params)
             print("Added user successfully")
             return True
@@ -61,24 +61,31 @@ class UserLogic:
         except Exception as err:
             print(f"Error deleting user: {err}")
             return False
-
-    def add_like(self, user_id, vacation_id):
+    def get_user(self, first_name, last_name, password):
+        query = "SELECT * from users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
         try:
-            query = """
-            INSERT INTO likes 
-            (users_id , vacations_id)
-            VALUES 
-            (%s, %s)
-            """
-            params = (user_id, vacation_id)
-            self.dal.insert(query, params)
-            print("Added like")
-            return True
-
+            result = self.dal.get_table(query, params)
+            return result if result is not None else None
         except Exception as err:
-            print(f"Error adding like: {err}")
-            return False
+            print(f"Error getting user: {err}")
 
+    def user_exists(self, first_name, last_name, password):
+
+        query = "SELECT COUNT(*) as count FROM users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
+        try:
+            result = self.dal.get_scalar(query, params)
+            return result['count'] > 0 if result else False
+        except Exception as err:
+            print(f"Error checking if user exists: {err}")
+            return False
+    def add_like(self, first_name, last_name , password, vacation_title):
+        query = "INSERT INTO likes VALUES ((SELECT id FROM mydb.users WHERE first_name LIKE %s) , (SELECT id FROM mydb.vacations WHERE title LIKE %s))"
+        params = (first_name, last_name, password ,vacation_title)
+        self.dal.insert(query, params)
+        print("Added like successfully")
+        return True
 
 if __name__ == "__main__":
     try:

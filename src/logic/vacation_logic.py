@@ -25,7 +25,7 @@ class VacationLogic:
             INSERT INTO vacations 
             (title, description, start_date, end_date, price, likes, image_url , countries_id)
             VALUES 
-            (%s, %s, %s, %s, %s, 0, %s , (SELECT id FROM vacations_mysql.countries WHERE country_name LIKE %s))
+            (%s, %s, %s, %s, %s, 0, %s , (SELECT id FROM mydb.countries WHERE country_name LIKE %s))
             """
             params = (title, description, start_date,
                     end_date, price, image , f"%{countries_name}%",)

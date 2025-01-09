@@ -133,6 +133,12 @@ class VacationFacade:
             break
 
 
+    def show_all_vacation(self):
+        return self.logic.get_all_vacations()
+
+
+
+
 if __name__ == "__main__":
 
     vacation = VacationFacade()

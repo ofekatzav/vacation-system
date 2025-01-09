@@ -17,25 +17,41 @@ class UserFacade:
 
 
     def add_user(self):
-        self.get_username()
         self.get_first_name()
         self.get_last_name()
         self.get_email()
         self.get_password()
         self.get_b_o_d()
+        if self.logic.user_exists(self.params[0], self.params[1], self.params[3]):
+            print("User already exists in the database.")
+            return False
 
-        return self.logic.add_user(*self.params)
+        if self.logic.add_user(*self.params):
+            print("User added successfully.")
+            return True
+        else:
+            print("Failed to add user.")
+            return False
 
-    def get_username(self):
-        while True:
-            username = input("Enter username : ").strip()
-            if len(username) < 4:
-                print("Username must be at least 4 characters long.")
+    def login(self):
+        # Collect login details
+        self.get_first_name()
+        self.get_last_name()
+        self.get_password()
 
-            else:
-                self.params.append(username)
-                print("Username added")
-                break
+        # Query the database for the user
+        user = self.logic.get_user(self.params[0], self.params[1], self.params[2])
+
+        # Check the results
+        if user is None or len(user) == 0:
+            print("Login failed: User not found.")
+            return False
+        elif len(user) > 1:
+            print("Login failed: Multiple users found with the same credentials.")
+            return False
+        else:
+            print(f"Login successful! Welcome, {self.params[0]} {self.params[1]}.")
+            return True
 
     def get_first_name(self):
         while True:
@@ -72,9 +88,6 @@ class UserFacade:
             else:
                 print("email is not valid")
 
-
-
-
     def get_password(self):
         while True:
             password = input("Enter password : ").strip()
@@ -97,25 +110,6 @@ class UserFacade:
                 print("password added")
                 break
 
-
-
-    #
-    # def get_countries_name(self):
-    #     while True:
-    #         countries_name = input("Enter country name: ").lower()
-    #         if self.country_logic.check_if_country_exist(countries_name):
-    #             print("Country added to vacation info!")
-    #             self.params.append(countries_name)
-    #             break
-    #         else:
-    #             print(
-    #                 "Country does not exist in database, here is a list of all countries:")
-    #             countries = self.country_logic.get_all_countries()
-    #             print(" | ".join(country["country_name"]
-    #                   for country in countries))
-
-
-
     def get_b_o_d(self):
 
         while True:
@@ -135,49 +129,20 @@ class UserFacade:
 
 
 
-    def get_price(self):
-        while True:
-            try:
-                price = float(input("Enter price: "))
-                if not 1000 <= price <= 10000:
-                    print("Price must be between 1000 and 10000")
-                else:
-                    self.params.append(price)
-                    print("Price added")
-                    break
-            except ValueError:
-                print("Price must be a number!")
 
-    def get_image(self):
-        while True:
-            image_url = input(
-                "Enter image URL (optional, press Enter to skip): ").strip()
-            if not image_url:
-                self.params.append(None)
-                print("No image URL selected")
-                break
-
-            # Basic URL validation with regular expression
-            url_pattern = r'^https?:\/\/[^\s\/$.?#].[^\s]*$'
-            if not re.match(url_pattern, image_url):
-                print("Invalid URL format!")
-                continue
-
-            self.params.append(image_url)
-            print("Image URL added")
-            break
 
 
 if __name__ == "__main__":
 
     user = UserFacade()
 
-    result = user.add_user()
 
-    print("\nBooking Results:")
-    print("---------------")
-    print(f"user first name: {user.params[0]}")
-    print(f"user last name: {user.params[1]}")
-    print(f"user email: {user.params[2]}")
-    print(f"user password  : {user.params[3]}")
-    print(f"user date of birth : {user.params[4]}")
+
+
+    print("=== Add User ===")
+    if user.add_user():
+        print("User successfully added to the system!")
+    else:
+        print("Could not add user to the system.")
+
+
