@@ -26,6 +26,7 @@ class UserFacade:
 
         if self.logic.user_exists(self.params[0], self.params[1], self.params[3]):
             print("User already exists in the database.")
+            self.params = []
             return False
 
         if self.logic.add_user(*self.params):
@@ -33,6 +34,7 @@ class UserFacade:
             return True
         else:
             print("Failed to add user.")
+            self.params = []
             return False
 
     def login(self):
@@ -48,9 +50,11 @@ class UserFacade:
         # Check the results
         if user is None or len(user) == 0:
             print("Login failed: User not found.")
+            self.params = []
             return False
         elif len(user) > 1:
             print("Login failed: Multiple users found with the same credentials.")
+            self.params = []
             return False
         else:
             print(f"Login successful! Welcome, {self.params[0]} {self.params[1]}.")

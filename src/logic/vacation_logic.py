@@ -63,6 +63,17 @@ class VacationLogic:
             print(f"Error deleting vacation: {err}")
             return False
 
+    def get_vac_id (self,title, start_date, end_date):
+        query = "SELECT id from vacations WHERE title = %s AND start_date = %s AND end_date = %s"
+        params = (title, start_date, end_date)
+        try:
+            result = self.dal.get_table(query, params)
+            return result if result is not None else None
+        except Exception as err:
+            print(f"Error getting vacation_id: {err}")
+
+
+
 
 if __name__ == "__main__":
     try:

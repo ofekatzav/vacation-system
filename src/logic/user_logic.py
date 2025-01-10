@@ -91,6 +91,7 @@ class UserLogic:
         except Exception as err:
             print(f"Error getting user_id: {err}")
 
+
     def add_like(self,user_id, vacation_id):
         query = "INSERT INTO likes (users_id , vacations_id) VALUES (%s , %s)"
         params = (user_id, vacation_id)
@@ -104,6 +105,13 @@ class UserLogic:
         self.dal.insert(query, params)
         print("Removed like successfully")
         return True
+
+    def get_user_likes(self, user_id):
+        query = "SELECT * from likes WHERE users_id = %s"
+        params = (user_id,)
+        result = self.dal.get_table(query, params)
+        return result if result is not None else []
+
 
 
 if __name__ == "__main__":
