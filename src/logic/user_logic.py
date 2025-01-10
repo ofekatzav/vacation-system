@@ -87,6 +87,17 @@ class UserLogic:
         print("Added like successfully")
         return True
 
+
+    def get_user_id(self, first_name, last_name, password):
+        query = "SELECT id from users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
+        try:
+            result = self.dal.get_table(query, params)
+            return result if result is not None else None
+        except Exception as err:
+            print(f"Error getting user_id: {err}")
+
+
 if __name__ == "__main__":
     try:
         with UserLogic() as userLogic:
