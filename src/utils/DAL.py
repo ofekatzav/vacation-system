@@ -17,7 +17,7 @@ class DAL:
                 host="localhost",
                 user="root",
                 password="harel1115",
-                database="vacation_system",
+                database="mydb",
                 autocommit=True  # כל פעולה תתבצע מיד על בסיס הנתונים
             )
 

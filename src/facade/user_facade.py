@@ -17,11 +17,13 @@ class UserFacade:
 
 
     def add_user(self):
+        print("========= SIGNUP =========")
         self.get_first_name()
         self.get_last_name()
         self.get_email()
         self.get_password()
         self.get_b_o_d()
+
         if self.logic.user_exists(self.params[0], self.params[1], self.params[3]):
             print("User already exists in the database.")
             return False
@@ -35,6 +37,7 @@ class UserFacade:
 
     def login(self):
         # Collect login details
+        print("========= LOGIN =========")
         self.get_first_name()
         self.get_last_name()
         self.get_password()
@@ -57,23 +60,23 @@ class UserFacade:
         while True:
             first_name = input("Enter first name : ").strip()
             if not first_name.replace(" ", "").isalpha():
-                print("first name must contain only letters and spaces")
+                print("First name must contain only letters and spaces")
             elif len(first_name) < 2:
-                print("first name must be at least 2 characters long")
+                print("First name must be at least 2 characters long")
             else:
                 self.params.append(first_name)
-                print("first name added")
+                print("Keep going!")
                 break
     def get_last_name(self):
         while True:
             last_name = input("Enter last name : ").strip()
             if not last_name.replace(" ", "").isalpha():
-                print("last name must contain only letters and spaces")
+                print("Last name must contain only letters and spaces")
             elif len(last_name) < 2:
-                print("last name must be at least 2 characters long")
+                print("Last name must be at least 2 characters long")
             else:
                 self.params.append(last_name)
-                print("last name added")
+                print("Keep going!")
                 break
 
     def get_email(self):
@@ -83,10 +86,10 @@ class UserFacade:
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             if re.match(pattern, email):
                 self.params.append(email)
-                print("email added")
+                print("Keep going!")
                 break
             else:
-                print("email is not valid")
+                print("Email is not valid")
 
     def get_password(self):
         while True:
@@ -107,7 +110,7 @@ class UserFacade:
                 print("Password must include at least one digit.")
             else:
                 self.params.append(password)
-                print("password added")
+                print("Good!")
                 break
 
     def get_b_o_d(self):
@@ -118,11 +121,11 @@ class UserFacade:
                 start_date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
                 if start_date > self.now:
-                    print("date of birth cannot be in the future")
+                    print("Date of birth cannot be in the future")
                     continue
 
                 self.params.append(start_date)
-                print("Start date added")
+                print("Great!")
                 break
             except ValueError:
                 print("Invalid date format. Please use YYYY-MM-DD")
@@ -142,6 +145,7 @@ if __name__ == "__main__":
     print("=== Add User ===")
     if user.add_user():
         print("User successfully added to the system!")
+
     else:
         print("Could not add user to the system.")
 
