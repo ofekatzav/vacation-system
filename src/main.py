@@ -1,7 +1,9 @@
 from facade.user_facade import *
+from facade.vacation_facade import *
 class start:
     def __init__(self):
         self.uf = UserFacade()
+        self.vf = VacationFacade()
         self.invalid = "************ Oops, your input was invalid please try again ************"
 
         while self.home_screen():
@@ -24,6 +26,9 @@ class start:
             elif option != "1" and option != "2" and option != "3":
                 print(self.invalid)
         return flag
+
+
+
     def app_menu(self):
         while True:
             print("What would you like to do?")
@@ -34,6 +39,12 @@ class start:
                 break
             elif option == "2":
                 print("Here are all the vacations:")
+                vacations = self.vf.show_all_vacation()
+                for vacation in vacations:
+                    print("----------------------")
+                    print(vacation)
+
+
             elif option == "3":
                 print("Here are all your liked vacations:")
             else:
