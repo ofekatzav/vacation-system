@@ -130,7 +130,11 @@ class UserFacade:
             except ValueError:
                 print("Invalid date format. Please use YYYY-MM-DD")
 
+    def get_params(self):
+        return self.params
 
+    def get_user_id(self, first_name, last_name, password):
+        return self.logic.get_user_id(first_name, last_name, password)
 
 
 

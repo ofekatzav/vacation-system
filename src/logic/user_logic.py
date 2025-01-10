@@ -80,12 +80,31 @@ class UserLogic:
         except Exception as err:
             print(f"Error checking if user exists: {err}")
             return False
-    def add_like(self, first_name, last_name , password, vacation_title):
-        query = "INSERT INTO likes VALUES ((SELECT id FROM mydb.users WHERE first_name LIKE %s) , (SELECT id FROM mydb.vacations WHERE title LIKE %s))"
-        params = (first_name, last_name, password ,vacation_title)
+
+
+    def get_user_id(self, first_name, last_name, password):
+        query = "SELECT id from users WHERE first_name = %s AND last_name = %s AND password = %s"
+        params = (first_name, last_name, password)
+        try:
+            result = self.dal.get_table(query, params)
+            return result if result is not None else None
+        except Exception as err:
+            print(f"Error getting user_id: {err}")
+
+    def add_like(self,user_id, vacation_id):
+        query = "INSERT INTO likes (users_id , vacations_id) VALUES (%s , %s)"
+        params = (user_id, vacation_id)
         self.dal.insert(query, params)
         print("Added like successfully")
         return True
+
+    def remove_like(self,user_id, vacation_id):
+        query = "DELETE FROM likes WHERE users_id = %s AND vacations_id = %s"
+        params = (user_id, vacation_id)
+        self.dal.insert(query, params)
+        print("Removed like successfully")
+        return True
+
 
 if __name__ == "__main__":
     try:

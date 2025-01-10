@@ -5,8 +5,11 @@ class start:
         self.uf = UserFacade()
         self.vf = VacationFacade()
         self.invalid = "************ Oops, your input was invalid please try again ************"
+        self.user_params = None
 
         while self.home_screen():
+            self.user_params = self.uf.get_params()
+            self.user_id = self.uf.get_user_id(self.user_params[0], self.user_params[1], self.user_params[3])
             self.app_menu()
 
 
@@ -36,6 +39,7 @@ class start:
             option = input()
             if option == "1":
                 print("************ Logging out ************")
+                self.user_params = None
                 break
             elif option == "2":
                 print("Here are all the vacations:")
