@@ -45,23 +45,25 @@ class DAL:
         if self.connection:
             try:
                 with self.connection.cursor(dictionary=True) as cursor:
-                    print(f"Executing query: {query}")
+                    # print(f"Executing query: {query}")
                     if params:
-                        print(f"With parameters: {params}")
+                        pass
+                        # print(f"With parameters: {params}")
                     cursor.execute(query, params)
                     if fetchall:
                         result = cursor.fetchall()
-                        print(f"Fetched {len(result)} rows")
+                        # print(f"Fetched {len(result)} rows")
                         return result
                     elif fetchone:
                         result = cursor.fetchone()
-                        print("Fetched one row")
+                        # print("Fetched one row")
                         return result
                     else:
-                        print(f"Query affected {cursor.rowcount} rows")
+                        # print(f"Query affected {cursor.rowcount} rows")
+                        pass
                     return cursor
             except mysql.connector.Error as err:
-                print(f"Error executing query: {err}")
+                pass
         return None
 
     def get_table(self, query, params=None):
@@ -130,46 +132,3 @@ if __name__ == '__main__':
         for user in users:
             print(f"first name:{user['first_name']}, last name:{user['last_name']}")
 
-        # # דוגמאות ל-get_scalar
-        # print("\n=== get_scalar examples ===")
-        # count = dal.get_scalar("SELECT COUNT(*) as count FROM users")
-        # max_age = dal.get_scalar("SELECT MAX(age) as max_age FROM users")
-
-        # # דוגמאות ל-get_one
-        # print("\n=== get_one examples ===")
-        # user = dal.get_one("SELECT * FROM users WHERE id = %s", (1,))
-        # country = dal.get_one(
-        #     "SELECT * FROM countries WHERE name = %s", ('Israel',))
-
-        # # דוגמאות ל-insert
-        # print("\n=== insert examples ===")
-        # dal.insert(
-        #     "INSERT INTO users (name, email, age) VALUES (%s, %s, %s)",
-        #     ('Johnny1', 'johnny1@example.com', 35)
-        # )
-        # dal.insert(
-        #     "INSERT INTO countries (name, code) VALUES (%s, %s)",
-        #     ('Brazil', 'BR')
-        # )
-
-        # # דוגמאות ל-update
-        # print("\n=== update examples ===")
-        # dal.update(
-        #     "UPDATE users SET age = %s WHERE id = %s",
-        #     (31, 1)
-        # )
-        # dal.update(
-        #     "UPDATE countries SET population = %s WHERE code = %s",
-        #     (67000000, 'FR')
-        # )
-
-        # # דוגמאות ל-delete
-        # print("\n=== delete examples ===")
-        # dal.delete(
-        #     "DELETE FROM users WHERE id = %s",
-        #     (1,)
-        # )
-        # dal.delete(
-        #     "DELETE FROM countries WHERE code = %s",
-        #     ('FR',)
-        # )

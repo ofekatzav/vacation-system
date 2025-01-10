@@ -107,7 +107,7 @@ class UserLogic:
         return True
 
     def get_user_likes(self, user_id):
-        query = "SELECT * from likes WHERE users_id = %s"
+        query = "SELECT * from vacations v, likes l WHERE l.users_id = %s and l.vacations_id = v.id"
         params = (user_id,)
         result = self.dal.get_table(query, params)
         return result if result is not None else []

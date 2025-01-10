@@ -57,7 +57,7 @@ class UserFacade:
             self.params = []
             return False
         else:
-            print(f"Login successful! Welcome, {self.params[0]} {self.params[1]}.")
+            print(f"\n\nLogin successful! Welcome, {self.params[0]} {self.params[1]}.")
             return True
 
     def get_first_name(self):
@@ -137,9 +137,14 @@ class UserFacade:
     def get_params(self):
         return self.params
 
+    def set_params(self, param):
+        self.params = param
+
     def get_user_id(self, first_name, last_name, password):
         return self.logic.get_user_id(first_name, last_name, password)
 
+    def get_user_likes(self, user_id):
+        return self.logic.get_user_likes(user_id)
 
 
 

@@ -136,7 +136,8 @@ class VacationFacade:
     def show_all_vacation(self):
         return self.logic.get_all_vacations()
 
-
+    def get_vac_id(self, title, start_d, end_d):
+        return self.logic.get_vac_id(title, start_d, end_d)
 
 
 if __name__ == "__main__":
