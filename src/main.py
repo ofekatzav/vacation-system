@@ -7,6 +7,7 @@ class start:
         self.invalid = "************ Oops, your input was invalid please try again ************"
         self.user_params = []
 
+
         while self.home_screen():
             self.user_params = self.uf.get_params()
             password = self.user_params[2] if len(self.user_params) < 4 else self.user_params[3]
@@ -65,28 +66,28 @@ class start:
     def view_all_vac(self):
         print("\nHere are all the vacations:")
         vacations = self.vf.show_all_vacation()
-        for vacation in vacations:
-            print("----------------------")
-            print(vacation)
+        for vacation in vacations: print("----------------------\n", vacation, sep="")
+
 
     # option 3
     def view_liked_vac(self):
         print("Here are all your liked vacations:")
-        print(self.uf.get_user_likes(self.user_id))
+        res = self.uf.get_user_likes(self.user_id)
+        print(res if res != [] else "You don't have any liked vacations")
 
     # option 4
     def add_like_to_vac(self):
-
+    #TODO: let the user choose vacation by typing a number
         print("Please write the title of the vacation\n")
         title = input()
-        print("Please write the start date  of the vacation\n")
+        print("Please write the start date of the vacation\n")
         start_d = input()
-        print("Please write the end date  of the vacation\n")
+        print("Please write the end date of the vacation\n")
         end_d = input()
         vac_id = self.vf.get_vac_id(title, start_d, end_d)[0]["id"]
         self.uf.logic.add_like(self.user_id, vac_id)
 
-    # option 5
+    #TODO option 5
     def remove_like_vac(self):
         pass
 

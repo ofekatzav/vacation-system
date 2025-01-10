@@ -91,14 +91,21 @@ class UserLogic:
         except Exception as err:
             print(f"Error getting user_id: {err}")
 
+    def add_like(self, user_id, vacation_id):
+        if not self.check_like_already_exist(user_id, vacation_id):
+            query = "INSERT INTO likes (users_id , vacations_id) VALUES (%s , %s)"
+            params = (user_id, vacation_id)
+            self.dal.insert(query, params)
+            query = "update vacations set likes = likes + 1 where id = (%s)"
+            params = (vacation_id,)
+            self.dal.update(query, params)
+            print("Added like successfully")
+            return True
+        else:
+            print("Like already exists")
+            return False
 
-    def add_like(self,user_id, vacation_id):
-        query = "INSERT INTO likes (users_id , vacations_id) VALUES (%s , %s)"
-        params = (user_id, vacation_id)
-        self.dal.insert(query, params)
-        print("Added like successfully")
-        return True
-
+        #TODO
     def remove_like(self,user_id, vacation_id):
         query = "DELETE FROM likes WHERE users_id = %s AND vacations_id = %s"
         params = (user_id, vacation_id)
@@ -112,7 +119,11 @@ class UserLogic:
         result = self.dal.get_table(query, params)
         return result if result is not None else []
 
-
+    def check_like_already_exist(self, user_id, vacation_id):
+        query = "select * from likes where users_id = %s and vacations_id = %s"
+        params = (user_id, vacation_id)
+        data = self.dal.get_table(query, params)
+        return bool(data)
 
 if __name__ == "__main__":
     try:

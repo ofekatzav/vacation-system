@@ -15,10 +15,11 @@ class VacationLogic:
         '''returns: list of vacation dictionaries'''
         '''empty list if no vacations in the database'''
 
-        query = "SELECT * from vacations"
+        query = "SELECT id, title, description, start_date, end_date, price, likes from vacations"
         result = self.dal.get_table(query)
         return result if result is not None else []
 
+    #TODO
     def add_vacation(self, title, description, start_date, end_date, countries_name, price, image):
         try:
             query = """
@@ -37,6 +38,7 @@ class VacationLogic:
             print(f"Error adding vacation: {err}")
             return False
 
+    #TODO
     def edit_vacation(self, id, **kwargs):
         if not kwargs:
             return False
@@ -53,6 +55,7 @@ class VacationLogic:
             print(f"Error updating vacation: {e}")
             return False
 
+    #TODO
     def del_vacation(self, id):
         query = "DELETE FROM vacations WHERE id = %s"
         params = (id,)
