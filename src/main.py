@@ -73,17 +73,28 @@ class start:
     def view_liked_vac(self):
         print("Here are all your liked vacations:")
         res = self.uf.get_user_likes(self.user_id)
-        print(res if res != [] else "You don't have any liked vacations")
+        if res:
+            for vacation in res:
+                print("----------------------\n", vacation, sep="")
+        else:
+            print("You don't have any liked vacations")
 
     # option 4
     def add_like_to_vac(self):
     #TODO: let the user choose vacation by typing a number
+        print ("Enter 'exit' to return to the main menu\n")
         print("Please write the title of the vacation\n")
         title = input()
+        if title == "exit":
+            return
         print("Please write the start date of the vacation\n")
         start_d = input()
+        if start_d == "exit":
+            return
         print("Please write the end date of the vacation\n")
         end_d = input()
+        if end_d == "exit":
+            return
         vac_id = self.vf.get_vac_id(title, start_d, end_d)[0]["id"]
         self.uf.logic.add_like(self.user_id, vac_id)
 
