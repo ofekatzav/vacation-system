@@ -111,7 +111,7 @@ class UserLogic:
             print("LIKED")
             return True
 
-        #TODO
+
     def remove_like(self,user_id, vacation_id):
 
         if not self.check_vac_id_exist(vacation_id):

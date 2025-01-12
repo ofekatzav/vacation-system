@@ -14,15 +14,15 @@ class UserFacade:
         self.params = []
         self.now = date.today()
         self.logic = UserLogic()
+        self.exit = "press e to exit"
 
 
     def add_user(self):
         print("========= SIGNUP =========")
-        self.get_first_name()
-        self.get_last_name()
-        self.get_email()
-        self.get_password()
-        self.get_b_o_d()
+        if self.get_first_name() or self.get_last_name() or self.get_email() or self.get_password() or self.get_b_o_d():
+            print("************Exiting************")
+            self.params = []
+            return False
 
         if self.logic.user_exists(self.params[0], self.params[1], self.params[3]):
             print("User already exists in the database.")
@@ -40,9 +40,10 @@ class UserFacade:
     def login(self):
         # Collect login details
         print("========= LOGIN =========")
-        self.get_first_name()
-        self.get_last_name()
-        self.get_password()
+        if self.get_first_name() or self.get_last_name() or self.get_password():
+            print("************Exiting************")
+            self.params = []
+            return False
 
         # Query the database for the user
         user = self.logic.get_user(self.params[0], self.params[1], self.params[2])
@@ -62,7 +63,9 @@ class UserFacade:
 
     def get_first_name(self):
         while True:
-            first_name = input("Enter first name : ").strip()
+            first_name = input(f"{self.exit}\nEnter first name: ").strip()
+            if first_name == "e":
+                return "exit"
             if not first_name.replace(" ", "").isalpha():
                 print("First name must contain only letters and spaces")
             elif len(first_name) < 2:
@@ -70,10 +73,13 @@ class UserFacade:
             else:
                 self.params.append(first_name)
                 print("Keep going!")
-                break
+                return
+
     def get_last_name(self):
         while True:
-            last_name = input("Enter last name : ").strip()
+            last_name = input(f"{self.exit}\nEnter last name: ").strip()
+            if last_name == "e":
+                return "exit"
             if not last_name.replace(" ", "").isalpha():
                 print("Last name must contain only letters and spaces")
             elif len(last_name) < 2:
@@ -81,23 +87,34 @@ class UserFacade:
             else:
                 self.params.append(last_name)
                 print("Keep going!")
-                break
+                return
 
     def get_email(self):
+
         while True:
-            email = input("Enter your email : ").strip()
+            email = input(f"{self.exit}\nEnter your email: ").strip()
+
+            if email == "e":
+                return "exit"
+
+            if not email:
+                print("Email cannot be empty")
+                continue
 
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-            if re.match(pattern, email):
+            if re.fullmatch(pattern, email):
                 self.params.append(email)
                 print("Keep going!")
-                break
+                return
+
             else:
                 print("Email is not valid")
 
     def get_password(self):
         while True:
-            password = input("Enter password : ").strip()
+            password = input(f"{self.exit}\nEnter password: ").strip()
+            if password == "e":
+                return "exit"
             if len(password) < 8:
                 print("Password must be at least 8 characters long.")
 
@@ -115,13 +132,16 @@ class UserFacade:
             else:
                 self.params.append(password)
                 print("Good!")
-                break
+                return
 
     def get_b_o_d(self):
 
         while True:
             try:
-                date_str = input("Enter your date of birth (YYYY-MM-DD): ")
+                date_str = input(f"{self.exit}\nEnter your date of birth (YYYY-MM-DD): ")
+                if date_str == "e":
+                    return "exit"
+
                 start_date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
                 if start_date > self.now:
@@ -130,7 +150,7 @@ class UserFacade:
 
                 self.params.append(start_date)
                 print("Great!")
-                break
+                return
             except ValueError:
                 print("Invalid date format. Please use YYYY-MM-DD")
 

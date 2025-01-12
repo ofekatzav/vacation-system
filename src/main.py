@@ -4,9 +4,9 @@ class start:
     def __init__(self):
         self.uf = UserFacade()
         self.vf = VacationFacade()
-        self.invalid = "************ Oops, your input was invalid please try again ************"
         self.user_params = []
-
+        self.invalid = "************ Oops, your input was invalid please try again ************"
+        self.exit = "press e to exit"
 
         while self.home_screen():
             self.user_params = self.uf.get_params()
@@ -14,21 +14,20 @@ class start:
             self.user_id = (self.uf.get_user_id(self.user_params[0], self.user_params[1], password))[0]["id"]
             self.app_menu()
 
-
     def home_screen(self):
         print("Choose an option:")
         flag = -1
         while flag == -1:
-            print("\n1 - SIGNUP \n2 - LOGIN\n3 - EXIT")
+            print(f"{self.exit}\n1 - SIGNUP \n2 - LOGIN")
             option = input()
             if option == "1" and self.uf.add_user():
                 flag = 1
             elif option == "2" and self.uf.login():
                 flag = 1
-            elif option == "3":
+            elif option == "e":
                 print("Bye bye <3")
                 flag = 0
-            elif option != "1" and option != "2" and option != "3":
+            elif option != "1" and option != "2" and option != "e":
                 print(self.invalid)
         return flag
 
@@ -90,8 +89,8 @@ class start:
 
     def check_vac_id(self):
         while True:
-            vac_id = input("Please enter a vacation id or exit to leave: ")
-            if vac_id == "exit":
+            vac_id = input(f"Please enter a vacation id\n{self.exit}: ")
+            if vac_id == "e":
                 return None
             try:
                 int(vac_id)
