@@ -89,7 +89,7 @@ class start:
 
     def check_vac_id(self):
         while True:
-            vac_id = input(f"Please enter a vacation id\n{self.exit}: ")
+            vac_id = input(f"Press e to go back\nPlease enter a vacation id: ")
             if vac_id == "e":
                 return None
             try:
