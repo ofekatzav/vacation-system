@@ -12,7 +12,8 @@ class start:
             self.user_params = self.uf.get_params()
             password = self.user_params[2] if len(self.user_params) < 4 else self.user_params[3]
             self.user_id = (self.uf.get_user_id(self.user_params[0], self.user_params[1], password))[0]["id"]
-            self.app_menu()
+            self.app_menu_manneger() if self.uf.is_admin(self.user_id) else self.app_menu()
+
 
     def home_screen(self):
         print("Choose an option:")
@@ -53,6 +54,31 @@ class start:
                 self.remove_like_vac()
             else:
                 print(self.invalid)
+
+
+    def app_menu_manneger(self):
+        while True:
+            print("\n\nWhat would you like to do?")
+            print("1 - Logout\n2 - View all vacations\n3 - Add new vacations"
+                  "\n4 - Delete vacations\n5 - Edit existing vacations")
+
+            option = input()
+            if option == "1":
+                self.logout()
+                break
+            elif option == "2":
+                self.view_all_vac()
+            elif option == "3":
+                self.add_new_vac()
+            elif option == "4":
+                self.delete_vac()
+            elif option == "5":
+                self.edit_vac()
+            else:
+                print(self.invalid)
+
+
+
 
 
     # option 1
@@ -98,7 +124,16 @@ class start:
             except ValueError:
                 print(f"{self.invalid}")
 
+    def add_new_vac(self):
+        #need to fix the insert country
+        return self.vf.add_vacation()
 
+    def delete_vac(self):
+        self.handle_vacation(self.vf.delete_vacation)
+
+    def edit_vac(self):
+        #need to do
+        pass
 
 
 if __name__ == "__main__":

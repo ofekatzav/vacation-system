@@ -61,11 +61,12 @@ class CountryLogic:
             return False
 
     def check_if_country_exist(self, countries_name):
-        query = "SELECT COUNT(*) FROM countries WHERE LOWER(country_name) = LOWER(%s)"
+        #need to fix
+        query = "SELECT COUNT(*) as count FROM countries WHERE LOWER(country_name) = LOWER(%s)"
         params = (countries_name,)
         try:
             result = self.dal.get_table(query, params)
-            return True if result is not None else False
+            return True if result is not None and result['count']>0 else False
         except Exception as err:
             print(f"Error checking if country exists: {err}")
             return False

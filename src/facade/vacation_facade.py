@@ -50,8 +50,9 @@ class VacationFacade:
                 print(
                     "Country does not exist in database, here is a list of all countries:")
                 countries = self.country_logic.get_all_countries()
-                print(" | ".join(country["country_name"]
-                      for country in countries))
+                for i in range(0, len(countries), 4):
+                    row = [country["country_name"] for country in countries[i:i + 3]]
+                    print(" | ".join(row))
 
     def get_description(self):
         while True:
@@ -138,6 +139,13 @@ class VacationFacade:
 
     def get_vac_id(self, title, start_d, end_d):
         return self.logic.get_vac_id(title, start_d, end_d)
+
+    def delete_vacation(self,user_id , vac_id):
+
+             return self.logic.del_vacation(vac_id)
+
+
+
 
 
 if __name__ == "__main__":

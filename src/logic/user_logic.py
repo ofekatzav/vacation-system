@@ -82,6 +82,15 @@ class UserLogic:
             return False
 
 
+    def is_admin(self, user_id):
+        query = "SELECT roles_id FROM users WHERE id = %s"
+        params = (user_id,)
+        try:
+            result = self.dal.get_scalar(query, params)
+            return True if result is not None and int(result['roles_id'])==2 else False
+        except Exception as err:
+            print(f"Error checking if user exists: {err}")
+
     def get_user_id(self, first_name, last_name, password):
         query = "SELECT id from users WHERE first_name = %s AND last_name = %s AND password = %s"
         params = (first_name, last_name, password)

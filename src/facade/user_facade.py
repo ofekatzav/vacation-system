@@ -172,6 +172,8 @@ class UserFacade:
     def get_user_likes(self, user_id):
         return self.logic.get_user_likes(user_id)
 
+    def is_admin(self, user_id):
+        return self.logic.is_admin(user_id)
 
 
 if __name__ == "__main__":

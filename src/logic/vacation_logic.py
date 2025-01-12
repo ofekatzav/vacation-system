@@ -75,6 +75,17 @@ class VacationLogic:
         except Exception as err:
             print(f"Error getting vacation_id: {err}")
 
+    def check_if_vacation_exist(self, vacation_id):
+        query = "SELECT COUNT(*) as count from vacations WHERE id = %s"
+        params = (vacation_id,)
+        try:
+            result = self.dal.get_scalar(query, params)
+            return result['count'] > 0 if result else False
+        except Exception as err:
+            print(f"Error checking if vacation exists: {err}")
+            return False
+
+
 
 
 
