@@ -134,6 +134,12 @@ class UserFacade:
             except ValueError:
                 print("Invalid date format. Please use YYYY-MM-DD")
 
+    def add_like(self, user_id, vacation_id):
+        return self.logic.add_like(user_id, vacation_id)
+
+    def remove_like(self, user_id, vacation_id):
+        return self.logic.remove_like(user_id, vacation_id)
+
     def get_params(self):
         return self.params
 
@@ -151,9 +157,6 @@ class UserFacade:
 if __name__ == "__main__":
 
     user = UserFacade()
-
-
-
 
     print("=== Add User ===")
     if user.add_user():

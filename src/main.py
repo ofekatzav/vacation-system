@@ -68,39 +68,39 @@ class start:
         vacations = self.vf.show_all_vacation()
         for vacation in vacations: print("----------------------\n", vacation, sep="")
 
-
     # option 3
     def view_liked_vac(self):
         print("Here are all your liked vacations:")
         res = self.uf.get_user_likes(self.user_id)
-        if res:
-            for vacation in res:
-                print("----------------------\n", vacation, sep="")
-        else:
-            print("You don't have any liked vacations")
+        print(*res, sep="\n----------------------\n") if res else print("You don't have any liked vacations")
 
-    # option 4
+    #option 4
     def add_like_to_vac(self):
-    #TODO: let the user choose vacation by typing a number
-        print ("Enter 'exit' to return to the main menu\n")
-        print("Please write the title of the vacation\n")
-        title = input()
-        if title == "exit":
-            return
-        print("Please write the start date of the vacation\n")
-        start_d = input()
-        if start_d == "exit":
-            return
-        print("Please write the end date of the vacation\n")
-        end_d = input()
-        if end_d == "exit":
-            return
-        vac_id = self.vf.get_vac_id(title, start_d, end_d)[0]["id"]
-        self.uf.logic.add_like(self.user_id, vac_id)
+        self.handle_vacation(self.uf.add_like)
 
-    #TODO option 5
+    #option 5
     def remove_like_vac(self):
-        pass
+        self.handle_vacation(self.uf.remove_like)
+
+    def handle_vacation(self, action):
+        while True:
+            vac_id = self.check_vac_id()
+            if vac_id is None or action(self.user_id, vac_id):
+                break
+
+    def check_vac_id(self):
+        while True:
+            vac_id = input("Please enter a vacation id or exit to leave: ")
+            if vac_id == "exit":
+                return None
+            try:
+                int(vac_id)
+                return vac_id
+            except ValueError:
+                print(f"{self.invalid}")
+
+
+
 
 if __name__ == "__main__":
     s = start()

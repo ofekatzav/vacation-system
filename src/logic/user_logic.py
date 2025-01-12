@@ -92,29 +92,48 @@ class UserLogic:
             print(f"Error getting user_id: {err}")
 
     def add_like(self, user_id, vacation_id):
-        if not self.check_like_already_exist(user_id, vacation_id):
+
+        if not self.check_vac_id_exist(vacation_id):
+            print("Vacation not found, try again")
+            return False
+
+        elif self.check_like_already_exist(user_id, vacation_id):
+            print("You already liked that vacation")
+            return False
+
+        else:
             query = "INSERT INTO likes (users_id , vacations_id) VALUES (%s , %s)"
             params = (user_id, vacation_id)
             self.dal.insert(query, params)
             query = "update vacations set likes = likes + 1 where id = (%s)"
             params = (vacation_id,)
             self.dal.update(query, params)
-            print("Added like successfully")
+            print("LIKED")
             return True
-        else:
-            print("Like already exists")
-            return False
 
         #TODO
     def remove_like(self,user_id, vacation_id):
-        query = "DELETE FROM likes WHERE users_id = %s AND vacations_id = %s"
-        params = (user_id, vacation_id)
-        self.dal.insert(query, params)
-        print("Removed like successfully")
-        return True
+
+        if not self.check_vac_id_exist(vacation_id):
+            print("Vacation not found, try again")
+            return False
+
+        elif not self.check_like_already_exist(user_id, vacation_id):
+            print("You didn't like that vacation")
+            return False
+
+        else:
+            query = "DELETE FROM likes WHERE users_id = %s AND vacations_id = %s"
+            params = (user_id, vacation_id)
+            self.dal.delete(query, params)
+            query = "update vacations set likes = likes - 1 where id = (%s)"
+            params = (vacation_id,)
+            self.dal.update(query, params)
+            print("Removed like successfully")
+            return True
 
     def get_user_likes(self, user_id):
-        query = "SELECT * from vacations v, likes l WHERE l.users_id = %s and l.vacations_id = v.id"
+        query = "SELECT v.* from vacations v, likes l WHERE l.users_id = %s and l.vacations_id = v.id"
         params = (user_id,)
         result = self.dal.get_table(query, params)
         return result if result is not None else []
@@ -122,8 +141,15 @@ class UserLogic:
     def check_like_already_exist(self, user_id, vacation_id):
         query = "select * from likes where users_id = %s and vacations_id = %s"
         params = (user_id, vacation_id)
-        data = self.dal.get_table(query, params)
-        return bool(data)
+        result = self.dal.get_table(query, params)
+        return bool(result)
+
+
+    def check_vac_id_exist(self, vac_id):
+        query = "SELECT * from vacations where id = %s"
+        params = (vac_id,)
+        result = self.dal.get_one(query, params)
+        return bool(result)
 
 if __name__ == "__main__":
     try:

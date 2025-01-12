@@ -16,7 +16,7 @@ class DAL:
             self.connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="ofek010170",
+                password="harel1115",
                 database="mydb",
                 autocommit=True  # כל פעולה תתבצע מיד על בסיס הנתונים
             )
