@@ -125,7 +125,6 @@ class start:
                 print(f"{self.invalid}")
 
     def add_new_vac(self):
-        #need to fix the insert country
         return self.vf.add_vacation()
 
     def delete_vac(self):
@@ -134,6 +133,7 @@ class start:
     def edit_vac(self):
         #need to do
         pass
+        self.handle_vacation(self.vf.add_vacation())
 
 
 if __name__ == "__main__":

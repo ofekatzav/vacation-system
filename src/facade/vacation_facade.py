@@ -24,8 +24,9 @@ class VacationFacade:
         self.get_countries_name()
         self.get_price()
         self.get_image()
-
-        return self.logic.add_vacation(*self.params)
+        answer = self.logic.add_vacation(*self.params)
+        self.set_params([])
+        return answer
 
     def get_title(self):
         while True:
@@ -144,9 +145,28 @@ class VacationFacade:
 
              return self.logic.del_vacation(vac_id)
 
+    def edit_vacation(self, vac_id):
+        while True:
+            option = input("\nWhat would you like to edit\n1 - Title\n2 - Description\n3 - Start date"
+                  "\n4 - End date\n5 - Price\n6 - Image url\n7 - Country name\n")
+            if option == "1":
+                self.get_title()
+            if option == "2":
+                self.get_description()
+            if option == "3":
+                self.get_start_date()
+            if option == "4":
+                self.get_end_date()
+            if option == "5":
+                self.get_price()
+            if option == "6":
+                self.get_image()
+            if option == "7":
+                self.get_countries_name()
 
 
-
+    def set_params(self, params):
+        self.params = params
 
 if __name__ == "__main__":
 
