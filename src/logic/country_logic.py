@@ -66,7 +66,7 @@ class CountryLogic:
         params = (countries_name,)
         try:
             result = self.dal.get_table(query, params)
-            return True if result is not None and result['count']>0 else False
+            return True if result is not None and result[0]['count']>0 else False
         except Exception as err:
             print(f"Error checking if country exists: {err}")
             return False

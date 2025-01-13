@@ -31,7 +31,7 @@ class VacationLogic:
             params = (title, description, start_date,
                     end_date, price, image , f"%{countries_name}%",)
             self.dal.insert(query, params)
-            print("Added vacation")
+            print("Vacation Added")
             return True
 
         except Exception as err:
@@ -61,6 +61,7 @@ class VacationLogic:
         params = (id,)
         try:
             result = self.dal.delete(query, params)
+            print(f"Vacation deleted")
             return True
         except Exception as err:
             print(f"Error deleting vacation: {err}")
@@ -80,7 +81,7 @@ class VacationLogic:
         params = (vacation_id,)
         try:
             result = self.dal.get_scalar(query, params)
-            return result['count'] > 0 if result else False
+            return result[0]['count'] > 0 if result else False
         except Exception as err:
             print(f"Error checking if vacation exists: {err}")
             return False

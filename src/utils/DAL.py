@@ -1,6 +1,8 @@
 import mysql.connector
 
 
+
+
 class DAL:
     """
     מחלקת DAL (Data Access Layer) - שכבת גישה לנתונים
