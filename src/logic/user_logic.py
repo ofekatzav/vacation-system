@@ -163,9 +163,32 @@ class UserLogic:
 if __name__ == "__main__":
     try:
         with UserLogic() as userLogic:
+            # Validate get_all_users
+            print("Fetching all users...")
             users = userLogic.get_all_users()
-            for user in users:
-                print("----------------------")
-                print(user)
+            if users:
+                print("Users retrieved:")
+                for user in users:
+                    print(user)
+            else:
+                print("No users found.")
+
+            # Validate add_user
+            new_user = ("John", "Doe", "john.doe@example.com", "password123", "1990-01-01", 1)
+            print(f"Adding user: {new_user}")
+            if userLogic.user_exists(*new_user[:3]):
+                print(f"User {new_user[0]} {new_user[1]} already exists.")
+            else:
+                success = userLogic.add_user(*new_user)
+                print("User added successfully." if success else "Failed to add user.")
+
+            # Validate is_admin
+            user_id = 1
+            print(f"Checking if user ID {user_id} is an admin...")
+            if userLogic.is_admin(user_id):
+                print(f"User ID {user_id} is an admin.")
+            else:
+                print(f"User ID {user_id} is not an admin.")
+
     except Exception as err:
         print(f"Error: {err}")

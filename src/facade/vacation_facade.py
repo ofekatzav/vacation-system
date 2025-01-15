@@ -155,11 +155,18 @@ class VacationFacade:
                 self.get_description()
                 return self.logic.edit_vacation(vac_id, description = str(self.params[0]))
             elif option == "3":
-                self.get_start_date()
-                return self.logic.edit_vacation(vac_id, start_date = str(self.params[0]))
+                while True:
+                    self.set_params([self.get_vac_end_date(vac_id)])
+                    self.get_start_date()
+                    if self.params[1]<self.params[0]:
+                        break
+                    else:
+                        print("start date cannot be in after end date")
+                return self.logic.edit_vacation(vac_id, start_date = str(self.params[1]))
             elif option == "4":
+                self.set_params([self.get_vac_start_date(vac_id)])
                 self.get_end_date()
-                return self.logic.edit_vacation(vac_id, end_date = str(self.params[0]))
+                return self.logic.edit_vacation(vac_id, end_date = str(self.params[1]))
             elif option == "5":
                 self.get_price()
                 return self.logic.edit_vacation(vac_id, price = str(self.params[0]))
@@ -169,9 +176,18 @@ class VacationFacade:
             else:
                 print("Error try again")
 
+    def check_if_vacation_exist(self, vacation_id):
+        return self.logic.check_if_vacation_exist(vacation_id)
 
     def set_params(self, params):
         self.params = params
+
+    def get_vac_start_date(self, vac_id):
+        return self.logic.get_start_date(vac_id)
+    def get_vac_end_date(self, vac_id):
+        return self.logic.get_end_date(vac_id)
+
+
 
 if __name__ == "__main__":
 

@@ -119,8 +119,11 @@ class start:
             if vac_id == "e":
                 return None
             try:
-                int(vac_id)
-                return vac_id
+                vac_id=int(vac_id)
+                if self.vf.check_if_vacation_exist(vac_id):
+                    return vac_id
+                else:
+                    print("this vacation does not exist")
             except ValueError:
                 print(f"{self.invalid}")
 

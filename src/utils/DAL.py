@@ -18,7 +18,7 @@ class DAL:
             self.connection = mysql.connector.connect(
                 host="localhost",
                 user="root",
-                password="harel1115",
+                password="ofek010170",
                 database="mydb",
                 autocommit=True  # כל פעולה תתבצע מיד על בסיס הנתונים
             )
@@ -124,13 +124,13 @@ class DAL:
 # דוגמת שימוש
 if __name__ == '__main__':
     with DAL() as dal:
-        # דוגמאות ל-get_table
+        # Example of get_table
         print("\n=== get_table examples ===")
         countries = dal.get_table("SELECT * FROM countries")
         users = dal.get_table("SELECT * FROM users")
 
         for country in countries:
-            print(f"country name: {country['country_name']}")
+            print(f"Country name: {country['country_name']}")
         for user in users:
-            print(f"first name:{user['first_name']}, last name:{user['last_name']}")
+            print(f"First name: {user['first_name']}, Last name: {user['last_name']}")
 

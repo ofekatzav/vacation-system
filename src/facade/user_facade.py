@@ -177,14 +177,18 @@ class UserFacade:
 
 
 if __name__ == "__main__":
-
-    user = UserFacade()
+    user_facade = UserFacade()
 
     print("=== Add User ===")
-    if user.add_user():
+    if user_facade.add_user():
         print("User successfully added to the system!")
-
     else:
         print("Could not add user to the system.")
+
+    print("\n=== Login ===")
+    if user_facade.login():
+        print("Login was successful!")
+    else:
+        print("Login failed.")
 
 
