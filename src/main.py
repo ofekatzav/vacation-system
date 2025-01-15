@@ -131,9 +131,9 @@ class start:
         self.handle_vacation(self.vf.delete_vacation)
 
     def edit_vac(self):
-        #need to do
-        pass
-        self.handle_vacation(self.vf.add_vacation())
+        self.handle_vacation(self.vf.edit_vacation)
+        self.vf.set_params([])
+
 
 
 if __name__ == "__main__":

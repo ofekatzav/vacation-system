@@ -142,27 +142,32 @@ class VacationFacade:
         return self.logic.get_vac_id(title, start_d, end_d)
 
     def delete_vacation(self,user_id , vac_id):
+        return self.logic.del_vacation(vac_id)
 
-             return self.logic.del_vacation(vac_id)
-
-    def edit_vacation(self, vac_id):
+    def edit_vacation(self, user_id, vac_id):
         while True:
             option = input("\nWhat would you like to edit\n1 - Title\n2 - Description\n3 - Start date"
-                  "\n4 - End date\n5 - Price\n6 - Image url\n7 - Country name\n")
+                  "\n4 - End date\n5 - Price\n6 - Image url\n")
             if option == "1":
                 self.get_title()
-            if option == "2":
+                return self.logic.edit_vacation(vac_id, title= str(self.params[0]))
+            elif option == "2":
                 self.get_description()
-            if option == "3":
+                return self.logic.edit_vacation(vac_id, description = str(self.params[0]))
+            elif option == "3":
                 self.get_start_date()
-            if option == "4":
+                return self.logic.edit_vacation(vac_id, start_date = str(self.params[0]))
+            elif option == "4":
                 self.get_end_date()
-            if option == "5":
+                return self.logic.edit_vacation(vac_id, end_date = str(self.params[0]))
+            elif option == "5":
                 self.get_price()
-            if option == "6":
+                return self.logic.edit_vacation(vac_id, price = str(self.params[0]))
+            elif option == "6":
                 self.get_image()
-            if option == "7":
-                self.get_countries_name()
+                return self.logic.edit_vacation(vac_id, image_url = str(self.params[0]))
+            else:
+                print("Error try again")
 
 
     def set_params(self, params):
